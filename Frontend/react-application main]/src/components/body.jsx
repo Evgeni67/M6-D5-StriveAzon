@@ -30,6 +30,7 @@ class Body extends React.Component {
     imgUrl: "",
     price: 0,
     category: "",
+
   };
   addProject = async () => {
     const project = this.state;

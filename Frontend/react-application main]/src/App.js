@@ -1,4 +1,5 @@
 import logo from "./logo.svg";
+import React from "react"
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Body from "./components/body";
@@ -18,18 +19,28 @@ import {
   Button,
 } from "react-bootstrap";
 
-function App() {
-  return (
-    <>
+class App extends React.Component {
+  state={
+    name:"guest"
+  }
+  changeUsername = async(username) => {
+   this.setState({name:username})
+  }
+
+  render(){
+    return (
       <>
-        <Router>
-          <Navbar />
-          <Route path="/" exact component={Products} />
-          <Route path="/products" component={Body} />
-        </Router>
+        <>
+          <Router>
+            <Navbar changeUsername = {this.changeUsername}/>
+            <Route path="/" exact render={(props)=><Products {...props} userName = {this.state.name}/> } />
+            <Route path="/products" component={Body} />
+          </Router>
+        </>
       </>
-    </>
-  );
+    );
+  }
+ 
 }
 
 export default App;

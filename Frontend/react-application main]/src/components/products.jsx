@@ -17,7 +17,7 @@ import {
 import "../css/Evgeni.css";
 class Products extends React.Component {
   state = {
-    currentProjects: [],
+    currentProducts: [],
     isOpen: false,
     isSecondOpen: false,
     currentId: "",
@@ -38,11 +38,11 @@ class Products extends React.Component {
   };
   closeSecondModal = () => this.setState({ isSecondOpen: false });
   addReview = async () => {
-    const project = { _id: this.state.currentId, comment: this.state.comment };
+    const project = { name:this.state.name,comment:this.state.comments };
 
     console.log("actually in");
     try {
-      let response = await fetch(`http://localhost:3002/projects/reviews`, {
+      let response = await fetch(`http://localhost:3002/reviews`, {
         method: "POST",
         body: JSON.stringify(project),
         headers: new Headers({
@@ -63,20 +63,20 @@ class Products extends React.Component {
     }
   };
 
-  deleteProduct = async (e) => {
-    let id = e.currentTarget.parentElement.children[0].innerText;
+  deleteProduct = async (e,id) => {
     try {
-      let response = await fetch(`http://localhost:3002/projects/${id}`, {
+      let response = await fetch(`http://localhost:3002/products/${id}`, {
         method: "DELETE",
       });
-      response = await response.json();
+     console.log(response)
       if (response.ok) {
         console.log(response);
       } else {
-        alert("The respose is not ok but still added tho");
+        alert("The respose is not ok but still removed");
       }
 
       console.log("Response: " + response);
+      this.fetchProducts()
       return response;
     } catch (e) {
       console.log("ERROR fetching HERE " + e);
@@ -107,30 +107,16 @@ class Products extends React.Component {
       console.log("ERROR fetching HERE " + e);
     }
   };
-  setTheReviews = async (id) => {
-    try {
-      let response = await fetch(`http://localhost:3002/projects/${id}`, {
-        method: "GET",
-      });
-      response = await response.json();
-      this.setState({ comments: response.reviews });
-      console.log(response.reviews);
-      return response;
 
-      //console.log("user", response)
-    } catch (e) {
-      console.log("ERROR fetching HERE " + e);
-    }
-  };
-  componentDidMount = async (prevState) => {
+  fetchProducts = async () => {
     try {
-      let response = await fetch(`http://localhost:3002/projects`, {
+      let response = await fetch(`http://localhost:3002/products`, {
         method: "GET",
       });
       response = await response.json();
 
       console.log(response);
-      this.setState({ currentProjects: response });
+      this.setState({ currentProducts: response });
       return response;
 
       //console.log("user", response)
@@ -138,24 +124,9 @@ class Products extends React.Component {
       console.log("ERROR fetching HERE " + e);
     }
   };
-  componentDidUpdate = async (prevState) => {
-    if (prevState !== this.state) {
-      try {
-        let response = await fetch(`http://localhost:3002/projects`, {
-          method: "GET",
-        });
-        response = await response.json();
-
-        console.log(response);
-        this.setState({ currentProjects: response });
-        return response;
-
-        //console.log("user", response)
-      } catch (e) {
-        console.log("ERROR fetching HERE " + e);
-      }
-    }
-  };
+  componentDidMount = async() =>{ 
+   this.fetchProducts()
+  }
   render() {
     return (
       <>
@@ -202,7 +173,7 @@ class Products extends React.Component {
             </Form>
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="primary" onClick={() => this.addReview()}>
+            <Button variant="secondary" onClick={() => this.addReview()}>
               Sumbit Comment
             </Button>
             <Button variant="secondary" onClick={this.closeModal}>
@@ -211,13 +182,13 @@ class Products extends React.Component {
           </Modal.Footer>
         </Modal>
         <Row>
-          {this.state.currentProjects.length !== 0 &&
-            this.state.currentProjects.map((project) => (
+          {this.state.currentProducts.length !== 0 &&
+            this.state.currentProducts.map((project) => (
               <Col sm={2} className="mt-5">
-                <Card style={{ width: "18rem" }} value={project.id}>
+                <Card style={{ width: "18rem" }} value={project._id}>
                   <Card.Img
                     variant="top"
-                    src={project.image}
+                    src={project.imgUrl}
                     style={{ height: "300px" }}
                   />
                   <Card.Body>
@@ -227,7 +198,7 @@ class Products extends React.Component {
                     <Card.Text>Brand / {project.brand}</Card.Text>
                     <Button variant="success">Buy Now {project.price}</Button>
                     <Button
-                      variant="primary"
+                      variant="secondary"
                       onClick={(e) => this.openModal(e)}
                     >
                       Add a review
@@ -240,7 +211,7 @@ class Products extends React.Component {
                     </Button>
                     <Button
                       variant="danger"
-                      onClick={(e) => this.deleteProduct(e)}
+                      onClick={(e) => this.deleteProduct(e,project._id)}
                     >
                       Delete Product{" "}
                     </Button>
