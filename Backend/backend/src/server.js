@@ -1,5 +1,6 @@
 const express = require("express");
 const cors = require("cors");
+const mongoose = require("mongoose");
 const { join } = require("path");
 const projectsRoutes = require("./services/projects");
 const server = express();
@@ -17,6 +18,14 @@ const loggerMiddleware = (req, res, next) => {
 server.use("/projects", projectsRoutes);
 server.use("/files", require("./services/files"));
 server.use(loggerMiddleware);
-server.listen(port, () => {
-  console.log("Server is running on port: ", port);
-});
+
+mongoose
+  .connect(process.env.MONGO_ATLAS, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(
+    server.listen(port, () => {
+      console.log("Server is running on port: ", port);
+    })
+  );
