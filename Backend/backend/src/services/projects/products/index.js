@@ -15,7 +15,7 @@ router.post("/", async (req, res) => {
 
 router.get("/", async (req, res) => {
   try {
-    const allProducts = await ProductModel.find();
+    const allProducts = await ProductModel.find().populate("reviews");
     res.send(allProducts);
   } catch (error) {
     console.log(error);
@@ -33,14 +33,34 @@ router.get("/:productID", async (req, res) => {
   }
 });
 
-router.get("/:productID", async (req, res) => {
+router.put("/:productID", async (req, res) => {
   try {
     const modifiedProduct = await ProductModel.findByIdAndUpdate(
       req.params.productID,
       req.body,
       { runValidators: true, new: true }
     );
-    res.send(modifiedProduct);
+    if (modifiedProduct) {
+      res.send(modifiedProduct);
+    } else {
+      res.send("Product not found in database");
+    }
+  } catch (error) {
+    console.log(error);
+    res.send("Somethings Gone Wrong");
+  }
+});
+
+router.delete("/:productID", async (req, res) => {
+  try {
+    const deletedProduct = await ProductModel.findByIdAndDelete(
+      req.params.productID
+    );
+    if (deletedProduct) {
+      res.send("Product deleted from database");
+    } else {
+      res.send("Product not found in database");
+    }
   } catch (error) {
     console.log(error);
     res.send("Somethings Gone Wrong");
