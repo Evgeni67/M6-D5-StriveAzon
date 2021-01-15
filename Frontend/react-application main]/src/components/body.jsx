@@ -9,6 +9,7 @@ import {
   Container,
   ListGroup,
   Button,
+  Col,
 } from "react-bootstrap";
 import "../css/Evgeni.css";
 
@@ -30,9 +31,17 @@ class Body extends React.Component {
     imgUrl: "",
     price: 0,
     category: "",
+    image: null,
   };
   addProject = async () => {
-    const project = this.state;
+    const project = {
+      name: this.state.name,
+      description: this.state.description,
+      brand: this.state.brand,
+      imgUrl: this.state.imgUrl,
+      price: this.state.price,
+      category: this.state.category,
+    };
     console.log("actually in");
     try {
       let response = await fetch(`http://localhost:3002/products`, {
@@ -45,6 +54,9 @@ class Body extends React.Component {
       response = await response.json();
       if (response.ok) {
         console.log(response);
+        if (this.state.img !== null) {
+          this.attachImage(response);
+        }
       } else {
         alert("not added");
       }
@@ -53,6 +65,19 @@ class Body extends React.Component {
       return response;
     } catch (e) {
       console.log("ERROR fetching HERE " + e);
+    }
+  };
+
+  attachImage = async (productID) => {
+    try {
+      let image = new FormData();
+      await image.append("productImage", this.state.image);
+      await fetch("http://localhost:3002/products/" + productID + "/upload", {
+        method: "POST",
+        body: image,
+      });
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -123,17 +148,33 @@ class Body extends React.Component {
                   placeholder="URL"
                 />
               </Form.Group>
-              <Form.Group controlId="exampleForm.ControlInput1">
-                <Form.Label>Category</Form.Label>
-                <Form.Control
-                  type="text"
-                  value={this.state.category}
-                  onChange={(e) =>
-                    this.setState({ category: e.currentTarget.value })
-                  }
-                  placeholder="Category"
-                />
-              </Form.Group>
+              <Form.Row>
+                <Col>
+                  <Form.Group controlId="exampleForm.ControlInput1">
+                    <Form.Label htmlFor="category">Category</Form.Label>
+                    <Form.Control
+                      type="text"
+                      name="category"
+                      value={this.state.category}
+                      onChange={(e) =>
+                        this.setState({ category: e.currentTarget.value })
+                      }
+                      placeholder="Category"
+                    />
+                  </Form.Group>
+                </Col>
+                <Form.Group controlId="exampleForm.ControlInput1">
+                  <Form.Label>Category</Form.Label>
+                  <Form.Control
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) =>
+                      this.setState({ image: e.target.files[0] })
+                    }
+                    placeholder="Category"
+                  />
+                </Form.Group>
+              </Form.Row>
 
               <Button variant="info" onClick={() => this.addProject()}>
                 {" "}
