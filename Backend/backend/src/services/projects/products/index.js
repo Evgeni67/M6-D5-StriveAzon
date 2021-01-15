@@ -1,5 +1,18 @@
 const express = require("express");
 const ProductModel = require("./schema");
+const multer = require("multer");
+
+const cloudinary = require("../../lib/cloudinary");
+const { CloudinaryStorage } = require("multer-storage-cloudinary");
+
+const storage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: {
+    folder: "m6d5",
+  },
+});
+const cloudinaryMulter = multer({ storage: storage });
+
 const router = express.Router();
 
 router.post("/", async (req, res) => {
@@ -81,5 +94,27 @@ router.post("/:productID/add-review/:reviewID", async (req, res) => {
     res.send("Something broke :(");
   }
 });
+
+router.post(
+  "/:productID/upload",
+  cloudinaryMulter.single("productImage"),
+  async (req, res) => {
+    try {
+      const modifiedProduct = await ProductModel.findByIdAndUpdate(
+        req.params.productID,
+        { imgUrl: req.file.path },
+        { runValidators: true, new: true }
+      );
+      if (modifiedProduct) {
+        res.send(modifiedProduct);
+      } else {
+        res.send("Product not found in database");
+      }
+    } catch (error) {
+      console.log(error);
+      res.send("Something broke :(");
+    }
+  }
+);
 
 module.exports = router;
