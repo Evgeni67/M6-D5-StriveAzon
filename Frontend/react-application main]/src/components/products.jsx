@@ -23,7 +23,7 @@ class Products extends React.Component {
     currentId: "",
     comments: [],
     rate: 1,
-    comment:""
+    comment: "",
   };
   openModal = (id) => {
     this.setState({
@@ -39,9 +39,12 @@ class Products extends React.Component {
   };
   closeSecondModal = () => this.setState({ isSecondOpen: false });
   addReview = async () => {
-
-    const project = { name:this.props.userName,comment:this.state.comment,rate:this.state.rate };
-    const reviewId = ""
+    const project = {
+      name: this.props.userName,
+      comment: this.state.comment,
+      rate: this.state.rate,
+    };
+    const reviewId = "";
 
     console.log("actually in");
     try {
@@ -52,26 +55,30 @@ class Products extends React.Component {
           "Content-Type": "application/json",
         }),
       });
-     const res = await response.json();
-      console.log("review id ->",res);
-      console.log("product id->", this.state.currentId)
+      const res = await response.json();
+      console.log("review id ->", res);
+      console.log("product id->", this.state.currentId);
       console.log("Response: " + res);
- 
-  //add it to the products reviews array     
-       let secondResponse = await fetch(`http://localhost:3002/products/${this.state.currentId}/add-review/${res}`, {
-         method: "POST",
-         body: JSON.stringify({productId:this.state.currentId, reviewId:res}),
-         headers: new Headers({
-           "Content-Type": "application/json",
-         }),
-       });
-       console.log(secondResponse)
+
+      //add it to the products reviews array
+      let secondResponse = await fetch(
+        `http://localhost:3002/products/${this.state.currentId}/add-review/${res}`,
+        {
+          method: "POST",
+          body: JSON.stringify({
+            productId: this.state.currentId,
+            reviewId: res,
+          }),
+          headers: new Headers({
+            "Content-Type": "application/json",
+          }),
+        }
+      );
+      console.log(secondResponse);
       return res;
     } catch (e) {
       console.log("ERROR fetching HERE " + e);
     }
-
-    
   };
 
   deleteProduct = async (e, id) => {
@@ -97,11 +104,11 @@ class Products extends React.Component {
     this.setState({ comment: event.target.value });
     console.log(this.state);
   };
-  changeStateRate= async (event) => {
+  changeStateRate = async (event) => {
     this.setState({ rate: event.target.value });
     console.log(this.state);
   };
- 
+
   getTheReviews = async (id) => {
     this.openSecondModal();
     try {
@@ -110,7 +117,7 @@ class Products extends React.Component {
       });
       response = await response.json();
       this.setState({ comments: response.reviews });
-    console.log(response.reviews);
+      console.log(response.reviews);
       return response;
 
       //console.log("user", response)
@@ -147,10 +154,14 @@ class Products extends React.Component {
           </Modal.Header>
           <Modal.Body>
             {this.state.comments.map((comment) => (
-              <p>  <img
-              className="commentSectionPic"
-              src="https://i.stack.imgur.com/l60Hf.png"
-            />  {comment.name} : {comment.comment} {comment.rate}/5 </p>
+              <p>
+                {" "}
+                <img
+                  className="commentSectionPic"
+                  src="https://i.stack.imgur.com/l60Hf.png"
+                />{" "}
+                {comment.name} : {comment.comment} {comment.rate}/5{" "}
+              </p>
             ))}
           </Modal.Body>
           <Modal.Footer>
@@ -165,7 +176,7 @@ class Products extends React.Component {
           </Modal.Header>
           <Modal.Body>
             <Form>
-            <Form.Group controlId="exampleForm.ControlInput1">
+              <Form.Group controlId="exampleForm.ControlInput1">
                 <Form.Label>Rate</Form.Label>
                 <Form.Control
                   type="text"
@@ -193,10 +204,10 @@ class Products extends React.Component {
             </Button>
           </Modal.Footer>
         </Modal>
-        <Row>
+        <Row className="justify-content-center">
           {this.state.currentProducts.length !== 0 &&
             this.state.currentProducts.map((project) => (
-              <Col sm={2} className="mt-5">
+              <Col xs={3} className="mt-5">
                 <Card style={{ width: "18rem" }} value={project._id}>
                   <Card.Img
                     variant="top"
