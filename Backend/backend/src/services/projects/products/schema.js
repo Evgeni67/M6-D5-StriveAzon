@@ -33,4 +33,21 @@ const ProductSchema = new Schema(
   { timestamps: true }
 );
 
-module.exports = model("Products", ProductSchema);
+ProductSchema.static(
+  "addReviewToProduct",
+  async function (productID, reviewID) {
+    await ProductModel.findByIdAndUpdate(
+      productID,
+      {
+        $push: {
+          reviews: reviewID,
+        },
+      },
+      { runValidators: true, new: true }
+    );
+  }
+);
+
+const ProductModel = model("Products", ProductSchema);
+
+module.exports = ProductModel;
