@@ -1,0 +1,10 @@
+nav Button {
+  margin-bottom: 0;
+  border: transparent;
+  text-align: left;
+  height: 45px;
+  max-width: 140px;
+  background-color: transparent;
+  color: white;
+  font-size: 13px;
+}

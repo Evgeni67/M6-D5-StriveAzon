@@ -2,7 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const { join } = require("path");
-const projectsRoutes = require("./services/projects");
+
 const productsRoutes = require("./services/projects/products");
 const reviewsRoutes = require("./services/projects/reviews");
 const server = express();
@@ -17,12 +17,11 @@ const loggerMiddleware = (req, res, next) => {
   console.log(`Logged ${req.url} ${req.method} -- ${new Date()}`);
   next();
 };
-server.use("/projects", projectsRoutes);
+
 server.use("/products", productsRoutes);
 server.use("/reviews", reviewsRoutes);
 server.use("/files", require("./services/files"));
 server.use(loggerMiddleware);
-
 
 mongoose
   .connect(process.env.MONGO_ATLAS, {
