@@ -25,9 +25,7 @@ router.get("/", async (req, res) => {
 
 router.get("/:productID", async (req, res) => {
   try {
-    const selectedProduct = await ProductModel.findById(
-      req.params.productID
-    ).populate("reviews");
+    const selectedProduct = await ProductModel.findById(req.params.productID);
     res.send(selectedProduct);
   } catch (error) {
     console.log(error);
