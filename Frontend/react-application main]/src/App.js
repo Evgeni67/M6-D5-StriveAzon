@@ -32,8 +32,8 @@ class App extends React.Component {
       <>
         <>
           <Router>
-            <Navbar />
-            <Route path="/" exact component={Products } />
+            <Navbar changeUsername = {this.changeUsername}/>
+            <Route path="/" exact render={(props)=><Products {...props} userName = {this.state.name}/> } />
             <Route path="/products" component={Body} />
           </Router>
         </>

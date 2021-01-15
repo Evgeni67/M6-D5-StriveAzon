@@ -98,8 +98,8 @@ class navbar extends Component {
   </Dropdown.Toggle>
 
   <Dropdown.Menu>
-    <Dropdown.Item  onClick = {this.props.changeUsername("Abdul")}>Abdul</Dropdown.Item>
-    <Dropdown.Item onClick = {this.props.changeUsername("Evegni")}>Evgeni </Dropdown.Item>
+    <Dropdown.Item  onClick = {()=>this.props.changeUsername("Abdul")}>Abdul</Dropdown.Item>
+    <Dropdown.Item onClick = {()=>this.props.changeUsername("Evegni")}>Evgeni </Dropdown.Item>
   </Dropdown.Menu>
 </Dropdown>
             </Col>
