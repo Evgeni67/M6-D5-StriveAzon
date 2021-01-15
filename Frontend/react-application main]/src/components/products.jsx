@@ -23,11 +23,12 @@ class Products extends React.Component {
     currentId: "",
     comments: [],
     rate: 1,
+    comment:""
   };
-  openModal = (e) => {
+  openModal = (id) => {
     this.setState({
       isOpen: true,
-      currentId: e.currentTarget.parentElement.children[0].innerText,
+      currentId: id,
     });
   };
   closeModal = () => this.setState({ isOpen: false });
@@ -38,7 +39,9 @@ class Products extends React.Component {
   };
   closeSecondModal = () => this.setState({ isSecondOpen: false });
   addReview = async () => {
-    const project = { name: this.state.name, comment: this.state.comments };
+
+    const project = { name:this.props.userName,comment:this.state.comment,rate:this.state.rate };
+    const reviewId = ""
 
     console.log("actually in");
     try {
@@ -49,18 +52,26 @@ class Products extends React.Component {
           "Content-Type": "application/json",
         }),
       });
-      response = await response.json();
-      if (response.ok) {
-        console.log(response);
-      } else {
-        alert("wtf");
-      }
-
-      console.log("Response: " + response);
-      return response;
+     const res = await response.json();
+      console.log("review id ->",res);
+      console.log("product id->", this.state.currentId)
+      console.log("Response: " + res);
+ 
+  //add it to the products reviews array     
+       let secondResponse = await fetch(`http://localhost:3002/products/${this.state.currentId}/add-review/${res}`, {
+         method: "POST",
+         body: JSON.stringify({productId:this.state.currentId, reviewId:res}),
+         headers: new Headers({
+           "Content-Type": "application/json",
+         }),
+       });
+       console.log(secondResponse)
+      return res;
     } catch (e) {
       console.log("ERROR fetching HERE " + e);
     }
+
+    
   };
 
   deleteProduct = async (e, id) => {
@@ -86,20 +97,20 @@ class Products extends React.Component {
     this.setState({ comment: event.target.value });
     console.log(this.state);
   };
-  changeStateRate = async (event) => {
-    this.setState({ rate: event.taget.value });
+  changeStateRate= async (event) => {
+    this.setState({ rate: event.target.value });
     console.log(this.state);
   };
-  getTheReviews = async (e) => {
+ 
+  getTheReviews = async (id) => {
     this.openSecondModal();
-    let id = e.currentTarget.parentElement.children[0].innerText;
     try {
-      let response = await fetch(`http://localhost:3002/projects/${id}`, {
+      let response = await fetch(`http://localhost:3002/products/${id}`, {
         method: "GET",
       });
       response = await response.json();
       this.setState({ comments: response.reviews });
-      console.log(response.reviews);
+    console.log(response.reviews);
       return response;
 
       //console.log("user", response)
@@ -136,7 +147,10 @@ class Products extends React.Component {
           </Modal.Header>
           <Modal.Body>
             {this.state.comments.map((comment) => (
-              <p>{comment.comment} </p>
+              <p>  <img
+              className="commentSectionPic"
+              src="https://i.stack.imgur.com/l60Hf.png"
+            />  {comment.name} : {comment.comment} {comment.rate}/5 </p>
             ))}
           </Modal.Body>
           <Modal.Footer>
@@ -151,15 +165,13 @@ class Products extends React.Component {
           </Modal.Header>
           <Modal.Body>
             <Form>
-              <Form.Group controlId="exampleForm.ControlSelect1">
-                <Form.Label>Rate:</Form.Label>
-                <Form.Control as="select">
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                  <option>4</option>
-                  <option>5</option>
-                </Form.Control>
+            <Form.Group controlId="exampleForm.ControlInput1">
+                <Form.Label>Rate</Form.Label>
+                <Form.Control
+                  type="text"
+                  onChange={(event) => this.changeStateRate(event)}
+                  placeholder="Dont be rude pls"
+                />
               </Form.Group>
 
               <Form.Group controlId="exampleForm.ControlInput1">
@@ -174,7 +186,7 @@ class Products extends React.Component {
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={() => this.addReview()}>
-              Sumbit Comment
+              Submit Comment
             </Button>
             <Button variant="secondary" onClick={this.closeModal}>
               Close
@@ -199,13 +211,13 @@ class Products extends React.Component {
                     <Button variant="success">Buy Now {project.price}</Button>
                     <Button
                       variant="secondary"
-                      onClick={(e) => this.openModal(e)}
+                      onClick={(e) => this.openModal(project._id)}
                     >
                       Add a review
                     </Button>
                     <Button
                       variant="info"
-                      onClick={(e) => this.getTheReviews(e)}
+                      onClick={(e) => this.getTheReviews(project._id)}
                     >
                       See Reviews
                     </Button>
