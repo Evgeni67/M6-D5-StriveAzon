@@ -39,3 +39,6 @@ nav input[type="text"]:focus {
 .form-label {
   color: white;
 }
+.modal-body .form-label {
+  color: black;
+}
