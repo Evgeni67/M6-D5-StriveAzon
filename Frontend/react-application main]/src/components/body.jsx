@@ -169,7 +169,7 @@ class Body extends React.Component {
                   </Form.Group>
                 </Col>
                 <Form.Group controlId="exampleForm.ControlInput1">
-                  <Form.Label>Category</Form.Label>
+                  <Form.Label>Upload Image</Form.Label>
                   <Form.Control
                     type="file"
                     accept="image/*"
