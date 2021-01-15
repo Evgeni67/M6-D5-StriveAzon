@@ -1,8 +1,10 @@
 import React, { Component } from "react";
 
-import { Navbar, Row, Col, Container, Dropdown } from "react-bootstrap";
+import { Navbar, Row, Col, Container, Dropdown, Nav } from "react-bootstrap";
 import logo from "./image/AmazonLogoNav.png";
 import "../css/Abdul.css";
+import { HiOutlineLocationMarker } from "react-icons/hi";
+import { BiCart } from "react-icons/bi";
 
 import { Link } from "react-router-dom";
 import "../css/navbar.css";
@@ -14,134 +16,116 @@ class navbar extends Component {
           className=" py-auto align-items-center"
           style={{ height: "65px", backgroundColor: "#131921" }}
         >
-          <Container fluid className="justify-content-start align-items-center">
-            <Navbar.Brand href="/">
-              <img src={logo} style={{ height: "45px", width: "145px" }} />
-            </Navbar.Brand>
-            <Row className="justify-content-start align-items-center">
-              <Col>
-                <button
-                  style={{
-                    height: "45px",
-                    maxWidth: "130px",
-                    background: "#131921",
-                    color: "white",
-                    fontSize: "13px",
-                  }}
-                >
-                  <div>
-                    <p>
-                      Deliver to <br />
-                      Albania
-                    </p>
-                  </div>
-                </button>
-              </Col>
-              <Col>
-                <input
-                  type="text"
-                  placeholder="Search.."
-                  style={{ height: "45px", maxWidth: "900px" }}
-                />
-              </Col>
-              <Col>
-                <Link to="/products">
-                  <button
-                    style={{
-                      height: "45px",
-                      width: "140px",
-                      background: "#131921",
-                      color: "white",
-                      fontSize: "14px",
-                    }}
-                  >
-                    <div>
-                      <p>
-                        Hello sing in
-                        <br />
-                        Account & list
-                      </p>
-                    </div>
-                  </button>
-                </Link>
-              </Col>
-              <Col>
-                <button
-                  style={{
-                    height: "45px",
-                    width: "120px",
-                    background: "#131921",
-                    color: "white",
-                    fontSize: "14px",
-                  }}
-                >
-                  <div>
-                    <p>
-                      Returns
-                      <br />& orders
-                    </p>
-                  </div>
-                </button>
-              </Col>
+          <Navbar.Brand href="/">
+            <img src={logo} style={{ height: "30px", width: "100px" }} />
+          </Navbar.Brand>
 
-              <Col>
-                <button
-                  style={{
-                    height: "45px",
-                    width: "120px",
-                    background: "#131921",
-                    color: "white",
-                    fontSize: "14px",
-                  }}
-                >
-                  <div>
-                    <p>
-                      Returns
-                      <br />& orders
-                    </p>
-                  </div>
-                </button>
-              </Col>
-              <Col>
-                <button
-                  style={{
-                    height: "45px",
-                    width: "120px",
-                    background: "#131921",
-                    color: "white",
-                    fontSize: "14px",
-                  }}
-                >
-                  <div>
-                    <p>Card</p>
-                  </div>
-                </button>
-              </Col>
-              <Col>
-                <Dropdown>
-                  <Dropdown.Toggle className="dropdownContainer">
-                    <img
-                      className="profilePicDrop"
-                      src="https://i.stack.imgur.com/l60Hf.png"
-                    />
-                  </Dropdown.Toggle>
+          <Nav.Link>
+            <button
+              style={{
+                height: "45px",
+                minWidth: "120px",
+                background: "#131921",
+                color: "white",
+                fontSize: "12px",
+              }}
+            >
+              <div className="d-flex justify-content-center align-items-end">
+                <HiOutlineLocationMarker size={20} />
+                <p>
+                  Deliver to {this.props.userName}
+                  <br />
+                  <strong>Albania</strong>
+                </p>
+              </div>
+            </button>
+          </Nav.Link>
+          <Col>
+            <input
+              type="text"
+              placeholder="Search.."
+              style={{ height: "45px", width: "100%", minWidth: "200px" }}
+            />
+          </Col>
+          <Nav.Link>
+            <Link to="/products">
+              <button
+                style={{
+                  height: "45px",
+                  width: "120px",
+                  background: "#131921",
+                  color: "white",
+                  fontSize: "14px",
+                }}
+              >
+                <div>
+                  <p>
+                    Hello, {this.props.userName}
+                    <br />
+                    <strong>Account & list</strong>
+                  </p>
+                </div>
+              </button>
+            </Link>
+          </Nav.Link>
+          <Nav.Link>
+            <button
+              style={{
+                height: "45px",
+                width: "80px",
+                background: "#131921",
+                color: "white",
+                fontSize: "14px",
+              }}
+            >
+              <div>
+                <p>
+                  Returns
+                  <br />
+                  <strong>& Orders</strong>
+                </p>
+              </div>
+            </button>
+          </Nav.Link>
 
-                  <Dropdown.Menu>
-                    <Dropdown.Item
-                      onClick={() => this.props.changeUsername("Abdul")}
-                    >
-                      Abdul
-                    </Dropdown.Item>
-                    <Dropdown.Item
-                      onClick={() => this.props.changeUsername("Evegni")}
-                    >
-                      Evgeni{" "}
-                    </Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown>
-              </Col>
-            </Row>
-          </Container>
+          <Nav.Link>
+            <button
+              style={{
+                height: "45px",
+                width: "120px",
+                background: "#131921",
+                color: "white",
+                fontSize: "14px",
+              }}
+            >
+              <div className="d-flex align-items-end">
+                <BiCart size={40} />
+                <p>
+                  <strong>Basket</strong>
+                </p>
+              </div>
+            </button>
+          </Nav.Link>
+
+          <Dropdown className="ml-auto">
+            <Dropdown.Toggle className="dropdownContainer">
+              <img
+                className="profilePicDrop"
+                src="https://i.stack.imgur.com/l60Hf.png"
+              />
+            </Dropdown.Toggle>
+
+            <Dropdown.Menu align="right">
+              <Dropdown.Item onClick={() => this.props.changeUsername("Abdul")}>
+                Abdul
+              </Dropdown.Item>
+              <Dropdown.Item
+                onClick={() => this.props.changeUsername("Evegni")}
+              >
+                Evgeni{" "}
+              </Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
         </Navbar>
       </div>
     );

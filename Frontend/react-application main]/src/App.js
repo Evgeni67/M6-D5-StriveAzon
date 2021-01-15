@@ -1,5 +1,5 @@
 import logo from "./logo.svg";
-import React from "react"
+import React from "react";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Body from "./components/body";
@@ -20,27 +20,35 @@ import {
 } from "react-bootstrap";
 
 class App extends React.Component {
-  state={
-    name:"guest"
-  }
-  changeUsername = async(username) => {
-   this.setState({name:username})
-  }
+  state = {
+    name: "guest",
+  };
+  changeUsername = async (username) => {
+    this.setState({ name: username });
+  };
 
-  render(){
+  render() {
     return (
       <>
         <>
           <Router>
-            <Navbar changeUsername = {this.changeUsername}/>
-            <Route path="/" exact render={(props)=><Products {...props} userName = {this.state.name}/> } />
+            <Navbar
+              changeUsername={this.changeUsername}
+              userName={this.state.name}
+            />
+            <Route
+              path="/"
+              exact
+              render={(props) => (
+                <Products {...props} userName={this.state.name} />
+              )}
+            />
             <Route path="/products" component={Body} />
           </Router>
         </>
       </>
     );
   }
- 
 }
 
 export default App;

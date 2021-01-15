@@ -8,3 +8,30 @@ nav Button {
   color: white;
   font-size: 13px;
 }
+nav Button:focus {
+  outline: none;
+}
+nav .col {
+  padding: 5px;
+}
+
+.nav-link {
+  padding: 0;
+}
+
+nav input[type="text"] {
+  border-radius: 10px;
+  border: none;
+  padding: 0px 10px;
+}
+
+nav p {
+  margin-bottom: 0;
+}
+
+nav input[type="text"]:focus {
+  border-radius: 10px;
+  border: none;
+  padding: 0px 10px;
+  outline: none;
+}

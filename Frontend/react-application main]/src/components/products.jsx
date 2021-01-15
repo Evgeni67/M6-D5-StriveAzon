@@ -39,8 +39,10 @@ class Products extends React.Component {
   };
   closeSecondModal = () => this.setState({ isSecondOpen: false });
   addReview = async () => {
+
     const project = { name:this.props.userName,comment:this.state.comment,rate:this.state.rate };
     const reviewId = ""
+
     console.log("actually in");
     try {
       let response = await fetch(`http://localhost:3002/reviews`, {
@@ -72,12 +74,12 @@ class Products extends React.Component {
     
   };
 
-  deleteProduct = async (e,id) => {
+  deleteProduct = async (e, id) => {
     try {
       let response = await fetch(`http://localhost:3002/products/${id}`, {
         method: "DELETE",
       });
-     console.log(response)
+      console.log(response);
       if (response.ok) {
         console.log(response);
       } else {
@@ -85,7 +87,7 @@ class Products extends React.Component {
       }
 
       console.log("Response: " + response);
-      this.fetchProducts()
+      this.fetchProducts();
       return response;
     } catch (e) {
       console.log("ERROR fetching HERE " + e);
@@ -133,9 +135,9 @@ class Products extends React.Component {
       console.log("ERROR fetching HERE " + e);
     }
   };
-  componentDidMount = async() =>{ 
-   this.fetchProducts()
-  }
+  componentDidMount = async () => {
+    this.fetchProducts();
+  };
   render() {
     return (
       <>
@@ -199,7 +201,7 @@ class Products extends React.Component {
                   <Card.Img
                     variant="top"
                     src={project.imgUrl}
-                    style={{ height: "300px" }}
+                    style={{ height: "300px", objectFit: "cover" }}
                   />
                   <Card.Body>
                     <div className="d-none">{project.id}</div>
@@ -221,7 +223,7 @@ class Products extends React.Component {
                     </Button>
                     <Button
                       variant="danger"
-                      onClick={(e) => this.deleteProduct(e,project._id)}
+                      onClick={(e) => this.deleteProduct(e, project._id)}
                     >
                       Delete Product{" "}
                     </Button>
