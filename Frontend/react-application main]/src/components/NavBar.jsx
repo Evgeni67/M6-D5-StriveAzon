@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 
-import { Navbar, Row, Col, Container } from "react-bootstrap";
+import { Navbar, Row, Col, Container, Dropdown } from "react-bootstrap";
 import logo from "./image/AmazonLogoNav.png";
 import "../css/Abdul.css";
 
 import { Link } from "react-router-dom";
-import "../css/navbar.css"
+import "../css/navbar.css";
 class navbar extends Component {
   render() {
     return (
@@ -84,54 +84,64 @@ class navbar extends Component {
                 </button>
               </Col>
 
-            </Link>
-            <Col>
-              <button
-                style={{
-                  height: "45px",
-                  width: "120px",
-                  background: "#131921",
-                  color: "white",
-                  fontSize: "14px",
-                }}
-              >
-                <div>
-                  <p>
-                    Returns
-                    <br />& orders
-                  </p>
-                </div>
-              </button>
-            </Col>
-            <Col>
-              <button
-                style={{
-                  height: "45px",
-                  width: "120px",
-                  background: "#131921",
-                  color: "white",
-                  fontSize: "14px",
-                }}
-              >
-                <div>
-                  <p>Card</p>
-                </div>
-              </button>
-            </Col>
-            <Col>
-            <Dropdown >
-  <Dropdown.Toggle className = "dropdownContainer">
-    <img className = "profilePicDrop" src="https://i.stack.imgur.com/l60Hf.png"/> 
-  </Dropdown.Toggle>
+              <Col>
+                <button
+                  style={{
+                    height: "45px",
+                    width: "120px",
+                    background: "#131921",
+                    color: "white",
+                    fontSize: "14px",
+                  }}
+                >
+                  <div>
+                    <p>
+                      Returns
+                      <br />& orders
+                    </p>
+                  </div>
+                </button>
+              </Col>
+              <Col>
+                <button
+                  style={{
+                    height: "45px",
+                    width: "120px",
+                    background: "#131921",
+                    color: "white",
+                    fontSize: "14px",
+                  }}
+                >
+                  <div>
+                    <p>Card</p>
+                  </div>
+                </button>
+              </Col>
+              <Col>
+                <Dropdown>
+                  <Dropdown.Toggle className="dropdownContainer">
+                    <img
+                      className="profilePicDrop"
+                      src="https://i.stack.imgur.com/l60Hf.png"
+                    />
+                  </Dropdown.Toggle>
 
-  <Dropdown.Menu>
-    <Dropdown.Item  onClick = {()=>this.props.changeUsername("Abdul")}>Abdul</Dropdown.Item>
-    <Dropdown.Item onClick = {()=>this.props.changeUsername("Evegni")}>Evgeni </Dropdown.Item>
-  </Dropdown.Menu>
-</Dropdown>
-            </Col>
-          </Row>
-
+                  <Dropdown.Menu>
+                    <Dropdown.Item
+                      onClick={() => this.props.changeUsername("Abdul")}
+                    >
+                      Abdul
+                    </Dropdown.Item>
+                    <Dropdown.Item
+                      onClick={() => this.props.changeUsername("Evegni")}
+                    >
+                      Evgeni{" "}
+                    </Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
+              </Col>
+            </Row>
+          </Container>
         </Navbar>
       </div>
     );
