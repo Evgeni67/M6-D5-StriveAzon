@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import { Navbar, Row, Col } from "react-bootstrap";
+import { Navbar, Row, Col,Dropdown } from "react-bootstrap";
 import logo from "./image/Amazon.jpg";
 import { Link } from "react-router-dom";
-
+import "../css/navbar.css"
 class navbar extends Component {
   render() {
     return (
@@ -90,6 +90,18 @@ class navbar extends Component {
                   <p>Card</p>
                 </div>
               </button>
+            </Col>
+            <Col>
+            <Dropdown >
+  <Dropdown.Toggle className = "dropdownContainer">
+    <img className = "profilePicDrop" src="https://i.stack.imgur.com/l60Hf.png"/> 
+  </Dropdown.Toggle>
+
+  <Dropdown.Menu>
+    <Dropdown.Item  onClick = {this.props.changeUsername("Abdul")}>Abdul</Dropdown.Item>
+    <Dropdown.Item onClick = {this.props.changeUsername("Evegni")}>Evgeni </Dropdown.Item>
+  </Dropdown.Menu>
+</Dropdown>
             </Col>
           </Row>
         </Navbar>

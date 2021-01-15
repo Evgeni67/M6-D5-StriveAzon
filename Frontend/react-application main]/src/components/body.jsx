@@ -26,17 +26,16 @@ class Body extends React.Component {
   state = {
     name: "default",
     description: "default",
-    dateAdded: "22/02/2001",
-    currentProjects: [],
-    image: "",
     brand: "",
-    price: "",
+    imgUrl: "",
+    price: 0,
+    category:"unknown"
   };
   addProject = async () => {
     const project = this.state;
     console.log("actually in");
     try {
-      let response = await fetch(`http://localhost:3002/projects`, {
+      let response = await fetch(`http://localhost:3002/products`, {
         method: "POST",
         body: JSON.stringify(project),
         headers: new Headers({
