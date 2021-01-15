@@ -26,17 +26,16 @@ class Body extends React.Component {
   state = {
     name: "default",
     description: "default",
-    dateAdded: "22/02/2001",
-    currentProjects: [],
-    image: "",
     brand: "",
-    price: "",
+    imgUrl: "",
+    price: 0,
+    category: "",
   };
   addProject = async () => {
     const project = this.state;
     console.log("actually in");
     try {
-      let response = await fetch(`http://localhost:3002/projects`, {
+      let response = await fetch(`http://localhost:3002/products`, {
         method: "POST",
         body: JSON.stringify(project),
         headers: new Headers({
@@ -62,7 +61,7 @@ class Body extends React.Component {
     console.log(this.state);
   };
   changeStateImage = async (event) => {
-    this.setState({ image: event.target.value });
+    this.setState({ imgUrl: event.target.value });
     console.log(this.state);
   };
   changeStateDescription = async (event) => {
@@ -111,7 +110,7 @@ class Body extends React.Component {
               <Form.Group controlId="exampleForm.ControlInput1">
                 <Form.Label>Price</Form.Label>
                 <Form.Control
-                  type="text"
+                  type="number"
                   onChange={(event) => this.changeStatePrice(event)}
                   placeholder="$$$"
                 />
@@ -122,6 +121,17 @@ class Body extends React.Component {
                   type="text"
                   onChange={(event) => this.changeStateImage(event)}
                   placeholder="URL"
+                />
+              </Form.Group>
+              <Form.Group controlId="exampleForm.ControlInput1">
+                <Form.Label>Category</Form.Label>
+                <Form.Control
+                  type="text"
+                  value={this.state.category}
+                  onChange={(e) =>
+                    this.setState({ category: e.currentTarget.value })
+                  }
+                  placeholder="Category"
                 />
               </Form.Group>
 
