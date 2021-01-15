@@ -51,11 +51,12 @@ class Body extends React.Component {
           "Content-Type": "application/json",
         }),
       });
-      response = await response.json();
+      const res = await response.json();
       if (response.ok) {
-        console.log(response);
-        if (this.state.img !== null) {
-          this.attachImage(response);
+        console.log("RESPONSE=" + response);
+        console.log("RES=" + res);
+        if (this.state.image !== null) {
+          this.attachImage(res);
         }
       } else {
         alert("not added");
@@ -72,9 +73,13 @@ class Body extends React.Component {
     try {
       let image = new FormData();
       await image.append("productImage", this.state.image);
+      console.log(image);
       await fetch("http://localhost:3002/products/" + productID + "/upload", {
         method: "POST",
         body: image,
+        headers: new Headers({
+          Accept: "application/json",
+        }),
       });
     } catch (error) {
       console.log(error);
