@@ -15,7 +15,7 @@ router.post("/", async (req, res) => {
 
 router.get("/", async (req, res) => {
   try {
-    const allProducts = await ProductModel.find();
+    const allProducts = await ProductModel.find().populate("reviews");
     res.send(allProducts);
   } catch (error) {
     console.log(error);

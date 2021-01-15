@@ -29,7 +29,8 @@ class Body extends React.Component {
     brand: "",
     imgUrl: "",
     price: 0,
-    category:"unknown"
+    category: "",
+
   };
   addProject = async () => {
     const project = this.state;
@@ -61,7 +62,7 @@ class Body extends React.Component {
     console.log(this.state);
   };
   changeStateImage = async (event) => {
-    this.setState({ image: event.target.value });
+    this.setState({ imgUrl: event.target.value });
     console.log(this.state);
   };
   changeStateDescription = async (event) => {
@@ -110,7 +111,7 @@ class Body extends React.Component {
               <Form.Group controlId="exampleForm.ControlInput1">
                 <Form.Label>Price</Form.Label>
                 <Form.Control
-                  type="text"
+                  type="number"
                   onChange={(event) => this.changeStatePrice(event)}
                   placeholder="$$$"
                 />
@@ -121,6 +122,17 @@ class Body extends React.Component {
                   type="text"
                   onChange={(event) => this.changeStateImage(event)}
                   placeholder="URL"
+                />
+              </Form.Group>
+              <Form.Group controlId="exampleForm.ControlInput1">
+                <Form.Label>Category</Form.Label>
+                <Form.Control
+                  type="text"
+                  value={this.state.category}
+                  onChange={(e) =>
+                    this.setState({ category: e.currentTarget.value })
+                  }
+                  placeholder="Category"
                 />
               </Form.Group>
 
