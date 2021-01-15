@@ -1,6 +1,6 @@
 const { Schema, model } = require("mongoose");
 
-const ReviewSchema = new Schema(
+const ReviewsSchema = new Schema(
   {
     "comment": {type:String,required:true}, 
         "rate": {type:Number,required:true}
