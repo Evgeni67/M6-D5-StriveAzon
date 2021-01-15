@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const { join } = require("path");
 const projectsRoutes = require("./services/projects");
 const productsRoutes = require("./services/projects/products");
+const reviewsRoutes = require("./services/projects/reviews");
 const server = express();
 const port = process.env.PORT || 3002;
 //we are sharing public folder publicly to access
@@ -18,8 +19,10 @@ const loggerMiddleware = (req, res, next) => {
 };
 server.use("/projects", projectsRoutes);
 server.use("/products", productsRoutes);
+server.use("/reviews", reviewsRoutes);
 server.use("/files", require("./services/files"));
 server.use(loggerMiddleware);
+
 
 mongoose
   .connect(process.env.MONGO_ATLAS, {
