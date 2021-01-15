@@ -5,7 +5,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Body from "./components/body";
 import Products from "./components/products";
 import Navbar from "./components/NavBar";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom"
 import {
   Row,
   Col,
@@ -44,7 +44,18 @@ class App extends React.Component {
               )}
             />
             <Route path="/products" component={Body} />
+
+			<div class="row copyright">
+				<div class="col-md-12 text-center">
+					<p>
+						<small class="block">&copy; 2021 | All Rights Reserved.</small> 
+						<small class="block">Powered by  EvgeniAndAbdul.com</small>
+					</p>
+				</div>
+			</div>
+
           </Router>
+          
         </>
       </>
     );

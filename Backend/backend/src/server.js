@@ -5,6 +5,8 @@ const { join } = require("path");
 
 const productsRoutes = require("./services/projects/products");
 const reviewsRoutes = require("./services/projects/reviews");
+const cardRoutes = require("./services/projects/card");
+
 const server = express();
 const port = process.env.PORT || 3002;
 //we are sharing public folder publicly to access
@@ -20,6 +22,8 @@ const loggerMiddleware = (req, res, next) => {
 
 server.use("/products", productsRoutes);
 server.use("/reviews", reviewsRoutes);
+server.use("/card", cardRoutes);
+
 server.use("/files", require("./services/files"));
 server.use(loggerMiddleware);
 
