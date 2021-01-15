@@ -30,7 +30,6 @@ class Body extends React.Component {
     imgUrl: "",
     price: 0,
     category: "",
-
   };
   addProject = async () => {
     const project = this.state;
@@ -136,7 +135,10 @@ class Body extends React.Component {
                 />
               </Form.Group>
 
-              <Button onClick={() => this.addProject()}> Add Project </Button>
+              <Button variant="info" onClick={() => this.addProject()}>
+                {" "}
+                Add Product{" "}
+              </Button>
             </Form>
           </div>
         </Container>
