@@ -15,7 +15,7 @@ router.post("/", async (req, res) => {
 
 router.get("/", async (req, res) => {
   try {
-    const allProducts = await ProductModel.find().populate("reviews");
+    const allProducts = await ProductModel.find();
     res.send(allProducts);
   } catch (error) {
     console.log(error);
@@ -25,7 +25,9 @@ router.get("/", async (req, res) => {
 
 router.get("/:productID", async (req, res) => {
   try {
-    const selectedProduct = await ProductModel.findById(req.params.productID);
+    const selectedProduct = await ProductModel.findById(
+      req.params.productID
+    ).populate("reviews");
     res.send(selectedProduct);
   } catch (error) {
     console.log(error);
@@ -64,6 +66,19 @@ router.delete("/:productID", async (req, res) => {
   } catch (error) {
     console.log(error);
     res.send("Somethings Gone Wrong");
+  }
+});
+
+router.post("/:productID/add-review/:reviewID", async (req, res) => {
+  try {
+    await ProductModel.addReviewToProduct(
+      req.params.productID,
+      req.params.reviewID
+    );
+    res.send("added");
+  } catch (error) {
+    console.log(error);
+    res.send("Something broke :(");
   }
 });
 
